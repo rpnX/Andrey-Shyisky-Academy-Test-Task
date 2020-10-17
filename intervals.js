@@ -19,14 +19,11 @@ function intervalConstruction(arr) {
     
     const Notes = {
         full: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
-        //      0    1    2    3    4    5    6
         half: ['Cbb', 'Cb', 'C', 'C#', 'C##', 'Dbb', 'Db', 'D', 'D#', 'D##', 'Ebb', 'Eb', 'E', 'E#', 'E##', 'Fbb', 'Fb', 'F', 'F#', 'F##', 'Gbb', 'Gb', 'G', 'G#', 'G##', 'Abb', 'Ab', 'A', 'A#', 'A##', 'Bbb', 'Bb', 'B', 'B#', 'B##']
     }
     
     const Semitons = [
         'C', 1, 'D', 1, 'E', 'F', 1, 'G', 1, 'A', 1, 'B',
-    //   0   1   2   3   4    5   6   7   8   9  10   11  
-    //   1   2   3   4   5    6   7   8   9  10  11   12
     ]
     
     const [Interval, StartNote, sc = 'asc'] = arr
@@ -142,9 +139,7 @@ function intervalIdentification(arr) {
     const Notes = {
         half: ['Cbb', 'Cb', 'C', 'C#', 'C##', 'Dbb', 'Db', 'D', 'D#', 'D##', 'Ebb', 'Eb', 'E', 'E#', 'E##', 'Fbb', 'Fb', 'F', 'F#', 'F##', 'Gbb', 'Gb', 'G', 'G#', 'G##', 'Abb', 'Ab', 'A', 'A#', 'A##', 'Bbb', 'Bb', 'B', 'B#', 'B##'],
         full: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
-        //      0    1    2    3    4    5    6
         semitons : ['C', 1, 'D', 1, 'E', 'F', 1, 'G', 1, 'A', 1, 'B']
-                //   0   1   2   3   4    5   6   7   8   9  10   11  
     }
 
     const [StartNote, EndNote, sc = 'asc'] = arr
@@ -215,16 +210,3 @@ function intervalIdentification(arr) {
     return(Result)
 
 }
-
-
-intervalIdentification(['C', 'D'])	      //M2
-intervalIdentification(['B', 'F#', 'asc'])  //P5
-intervalIdentification(['Fb', 'Gbb'])	      //m2
-intervalIdentification(['G', 'F#', 'asc'])  //M7
-intervalIdentification(['Bb', 'A', 'dsc'])  //m2
-intervalIdentification(['Cb', 'Abb', 'dsc']) //M3
-intervalIdentification(['G#', 'D#', 'dsc']) //P4
-intervalIdentification(['E', 'B', 'dsc'])	  //P4
-intervalIdentification(['E#', 'D#', 'dsc']) //M2
-intervalIdentification(['B', 'G#', 'dsc'])  //m3
-intervalIdentification(['G', 'G', 'dsc'])  //P8
