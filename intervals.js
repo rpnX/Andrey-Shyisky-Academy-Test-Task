@@ -123,6 +123,7 @@ function intervalConstruction(arr) {
     let Result = Notes.half[ResultKey]
     console.log(Result)
     return(Result)
+
     
     
 }
@@ -144,6 +145,19 @@ function intervalConstruction(arr) {
 
 function intervalIdentification(arr) {
 
+    const Intervals = {
+        1 : 'm2',
+        2 : 'M2',
+        3 : 'm3',
+        4 : 'M3',
+        5 : 'P4',
+        7 : 'P5',
+        8 : 'm6',
+        9 : 'M6',
+        10 : 'm7',
+        11 : 'M7',
+        12 : 'P8'
+    }
     const MIN_ARGUMENT_NUMBER = 2
     const MAX_ARGUMENT_NUMBER = 3
     
@@ -153,7 +167,6 @@ function intervalIdentification(arr) {
         //      0    1    2    3    4    5    6
         semitons : ['C', 1, 'D', 1, 'E', 'F', 1, 'G', 1, 'A', 1, 'B']
                 //   0   1   2   3   4    5   6   7   8   9  10   11  
-                //   1   2   3   4   5    6   7   8   9  10  11   12
     }
 
     const [StartNote, EndNote, as = 'asc'] = arr
@@ -188,6 +201,9 @@ function intervalIdentification(arr) {
         }
         return NoteSemitoneNumber
     }
+    const StartSemitoneOnce = Notes.semitons.indexOf(StartNoteOnce) + SemitoneNumber(StartNote)
+    const EndSemitoneOnce = Notes.semitons.indexOf(EndNoteOnce) + SemitoneNumber(EndNote)
+
 
     // console.log(SemitoneNumber(StartNote), SemitoneNumber(EndNote))
     const DegreesAsc = (StartNoteOnce, EndNoteOnce) => {
@@ -218,8 +234,39 @@ function intervalIdentification(arr) {
             return DegreesDsc(StartNoteOnce, EndNoteOnce)
         }
     }
+    const SemitonesAsc = (StartSemitoneOnce, EndSemitoneOnce) => {
+        if (StartSemitoneOnce < EndSemitoneOnce){
+            result = EndSemitoneOnce - StartSemitoneOnce
+        } else {
+            result = (Notes.semitons.length) - StartSemitoneOnce + EndSemitoneOnce
+        }
+        return(result)
+    }
 
-    console.log(Degreesres())
+    const SemitonesDsc = (StartSemitoneOnce, EndSemitoneOnce) => {
+        if (StartSemitoneOnce > EndSemitoneOnce){
+            result = StartSemitoneOnce - EndSemitoneOnce
+        } else {
+            result = StartSemitoneOnce + (Notes.semitons.length - EndSemitoneOnce)
+        }
+        return(result)
+    }
+
+    const Semitones = () => {
+        if (as == 'asc'){
+            return SemitonesAsc(StartSemitoneOnce, EndSemitoneOnce)
+        } else {
+            return SemitonesDsc(StartSemitoneOnce, EndSemitoneOnce)
+        }
+    }
+
+    const Result = Intervals[Semitones()]
+    console.log(Result)
+    return(Result)
+
+
+
+    // console.log(Degreesres())
 }
 
 intervalIdentification(['C', 'D'])	      //M2
