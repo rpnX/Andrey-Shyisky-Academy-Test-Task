@@ -121,23 +121,115 @@ function intervalConstruction(arr) {
     let ResultKey = Notes.half.indexOf(EndNote()) + difSemitonesNotes
 
     let Result = Notes.half[ResultKey]
-
     console.log(Result)
-    
     return(Result)
     
-
+    
 }
 
-intervalConstruction(['M2', 'C', 'dsc'])  //Bb
-intervalConstruction(['M2', 'C', 'asc'])  //D
-intervalConstruction(['P5', 'B', 'asc'])  //F#
-intervalConstruction(['m2', 'Bb', 'dsc'])  //A
-intervalConstruction(['M3', 'Cb', 'dsc'])  //Abb
-intervalConstruction(['P4', 'G#', 'dsc'])	//D#
-intervalConstruction(['m3', 'B', 'dsc']) 	//G#
-intervalConstruction(['m2', 'Fb', 'asc'])	//Gbb
-intervalConstruction(['M2', 'E#', 'dsc'])  //D#
-intervalConstruction(['P4', 'E', 'dsc'])  //B
-intervalConstruction(['m2', 'D#', 'asc'])	//E
-intervalConstruction(['M7', 'G', 'asc'])	 //F#
+// intervalConstruction(['M2', 'C', 'dsc'])  //Bb
+// intervalConstruction(['M2', 'C', 'asc'])  //D
+// intervalConstruction(['P5', 'B', 'asc'])  //F#
+// intervalConstruction(['m2', 'Bb', 'dsc'])  //A
+// intervalConstruction(['M3', 'Cb', 'dsc'])  //Abb
+// intervalConstruction(['P4', 'G#', 'dsc'])	//D#
+// intervalConstruction(['m3', 'B', 'dsc']) 	//G#
+// intervalConstruction(['m2', 'Fb', 'asc'])	//Gbb
+// intervalConstruction(['M2', 'E#', 'dsc'])  //D#
+// intervalConstruction(['P4', 'E', 'dsc'])  //B
+// intervalConstruction(['m2', 'D#', 'asc'])	//E
+// intervalConstruction(['M7', 'G', 'asc'])	 //F#
+// intervalConstruction(['P8', 'G', 'dsc'])  //G
+
+
+function intervalIdentification(arr) {
+
+    const MIN_ARGUMENT_NUMBER = 2
+    const MAX_ARGUMENT_NUMBER = 3
+    
+    const Notes = {
+        half: ['Cbb', 'Cb', 'C', 'C#', 'C##', 'Dbb', 'Db', 'D', 'D#', 'D##', 'Ebb', 'Eb', 'E', 'E#', 'E##', 'Fbb', 'Fb', 'F', 'F#', 'F##', 'Gbb', 'Gb', 'G', 'G#', 'G##', 'Abb', 'Ab', 'A', 'A#', 'A##', 'Bbb', 'Bb', 'B', 'B#', 'B##'],
+        full: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
+        //      0    1    2    3    4    5    6
+        semitons : ['C', 1, 'D', 1, 'E', 'F', 1, 'G', 1, 'A', 1, 'B']
+                //   0   1   2   3   4    5   6   7   8   9  10   11  
+                //   1   2   3   4   5    6   7   8   9  10  11   12
+    }
+
+    const [StartNote, EndNote, as = 'asc'] = arr
+
+    const StartNoteOnce = StartNote[0]
+    const EndNoteOnce = EndNote[0]
+
+    if((arr.length < MIN_ARGUMENT_NUMBER) || (arr.length > MAX_ARGUMENT_NUMBER)){
+        throw "Illegal number of elements in input array"
+    }
+
+    if(Notes.half.indexOf(StartNote) == -1){
+        throw "Wrong First Note"
+    }
+    if(Notes.half.indexOf(EndNote) == -1){
+        throw "Wrong Last Note"
+    }
+
+    const SemitoneNumber = (Note) => {
+
+        let NoteSemitoneNumber
+
+        if (Note[1] == '#'){
+            NoteSemitoneNumber = 1
+        } else if (!Note[1]){
+            NoteSemitoneNumber = 0
+        } else {
+            NoteSemitoneNumber = -1
+        }
+        if(Note.length > 2){
+            NoteSemitoneNumber*=2
+        }
+        return NoteSemitoneNumber
+    }
+
+    // console.log(SemitoneNumber(StartNote), SemitoneNumber(EndNote))
+    const DegreesAsc = (StartNoteOnce, EndNoteOnce) => {
+
+        if ( Notes.full.indexOf(StartNoteOnce) < Notes.full.indexOf(EndNoteOnce)){
+            result = Notes.full.indexOf(EndNoteOnce) - Notes.full.indexOf(StartNoteOnce) + 1
+        } else { 
+            result = ((Notes.full.length - 1) - Notes.full.indexOf(StartNoteOnce)) + Notes.full.indexOf(EndNoteOnce) + 2 
+        }
+        return(result)
+
+    }
+    const DegreesDsc = (StartNoteOnce, EndNoteOnce) => {
+        
+        if ( Notes.full.indexOf(StartNoteOnce) > Notes.full.indexOf(EndNoteOnce)){
+            result = Notes.full.indexOf(StartNoteOnce) - Notes.full.indexOf(EndNoteOnce) + 1
+        } else { 
+            result = ( Notes.full.indexOf(StartNoteOnce) + 1) + ((Notes.full.length) - Notes.full.indexOf(EndNoteOnce))
+        }
+        return(result)
+    }
+
+    const Degreesres =() => {
+
+        if (as == 'asc'){
+            return DegreesAsc(StartNoteOnce, EndNoteOnce)
+        } else {
+            return DegreesDsc(StartNoteOnce, EndNoteOnce)
+        }
+    }
+
+    console.log(Degreesres())
+}
+
+intervalIdentification(['C', 'D'])	      //M2
+intervalIdentification(['B', 'F#', 'asc'])  //P5
+intervalIdentification(['Fb', 'Gbb'])	      //m2
+intervalIdentification(['G', 'F#', 'asc'])  //M7
+intervalIdentification(['Bb', 'A', 'dsc'])  //m2
+intervalIdentification(['Cb', 'Abb', 'dsc']) //M3
+intervalIdentification(['G#', 'D#', 'dsc']) //P4
+intervalIdentification(['E', 'B', 'dsc'])	  //P4
+intervalIdentification(['E#', 'D#', 'dsc']) //M2
+intervalIdentification(['B', 'G#', 'dsc'])  //m3
+intervalIdentification(['G', 'G', 'dsc']) //P8
