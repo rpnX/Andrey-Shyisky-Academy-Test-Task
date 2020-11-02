@@ -59,7 +59,7 @@ function intervalConstruction(arr) {
     }
 
     const FindEndNoteAsc = (Note, Interval) => {
-        if ((Intervals[Interval].degrees + Notes.full.indexOf(Note)) < (Notes.full.length - 1)){
+        if ((Intervals[Interval].degrees + Notes.full.indexOf(Note)) <= (Notes.full.length)){
             result = Notes.full.indexOf(Note) + Intervals[Interval].degrees - 1
         } else {
             result = Intervals[Interval].degrees - (Notes.full.length - Notes.full.indexOf(Note)) - 1
@@ -114,6 +114,7 @@ function intervalConstruction(arr) {
     let ResultKey = Notes.half.indexOf(EndNote()) + difSemitonesNotes
 
     let Result = Notes.half[ResultKey]
+
     return(Result)
 
 }
